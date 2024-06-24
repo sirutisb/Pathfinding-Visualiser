@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "utils.h"
 #include "grid.h"
+#include "pathfinder.h"
 #include <imgui.h>
 
 struct MenuData
@@ -17,7 +18,7 @@ class Renderer
 {
 public:
 	Renderer(sf::RenderTarget& target, Grid& grid);
-
+	~Renderer();
 	void render();
 	void renderMenu();
 	MenuData& getMenuData();
@@ -28,4 +29,5 @@ private:
 	sf::RenderTarget& m_target;
 	MenuData m_menuData;
 	Grid& m_grid;
+	Pathfinder* m_pathfinder;
 };

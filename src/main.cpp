@@ -25,9 +25,8 @@ void handleEvents(sf::RenderWindow& window, CameraController& cameraController, 
 	}
 }
 
-void renderScene(sf::RenderWindow& window, Renderer& renderer, sf::CircleShape& circle) {
+void renderScene(sf::RenderWindow& window, Renderer& renderer) {
 	window.clear(sf::Color(18, 33, 43));
-	//window.draw(circle);
 	renderer.render();
 	ImGui::SFML::Render(window);
 	window.display();
@@ -40,12 +39,7 @@ int main()
 	ImGui::GetIO().IniFilename = nullptr;
 	Grid grid;
 	Renderer renderer(window, grid);
-	//sf::View view({ 0.0f, 0.0f }, { WINDOW_WIDTH, WINDOW_HEIGHT});
-	sf::View view = window.getDefaultView(); // maybe better since our origin is now top left of our window
-	window.setView(view);
-	sf::CircleShape circle(400, 64);
-	circle.setFillColor(sf::Color(204, 77, 5));
-	circle.setOrigin(400, 400);
+	sf::View view = window.getDefaultView();
 	window.setFramerateLimit(30);
 	window.setKeyRepeatEnabled(false);
 
@@ -56,7 +50,7 @@ int main()
 		handleEvents(window, cameraController, menuData);
 		ImGui::SFML::Update(window, deltaClock.restart());
 		cameraController.update();
-		renderScene(window, renderer, circle);
+		renderScene(window, renderer);
 	}
 	ImGui::SFML::Shutdown();
 	return 0;

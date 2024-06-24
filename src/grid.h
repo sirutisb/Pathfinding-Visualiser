@@ -1,5 +1,6 @@
 #pragma once
 #include "utils.h"
+#include <string>
 
 struct Node
 {
@@ -15,7 +16,7 @@ public:
 		createGrid(size, nodeSize);
 	}
 
-	~Grid() { delete m_nodes; }
+	~Grid() { delete[] m_nodes; }
 
 	void createGrid(sf::Vector2i size, float nodeSize) {
 		m_size = size;
@@ -28,6 +29,9 @@ public:
 	Node& getNode(Vec2i pos) { return getNode(pos.x, pos.y); }
 	Vec2i getSize() const { return m_size; }
 	float getNodeSize() const { return m_nodeSize; }
+	void clearGrid();
+	void saveGrid(const std::string& filename);
+	void loadGrid(const std::string& filename);
 
 private:
 	Node* m_nodes = nullptr;

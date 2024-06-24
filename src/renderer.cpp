@@ -1,7 +1,13 @@
 #include "renderer.h"
+#include "DijkstraPathfinder.h"
 
-Renderer::Renderer(sf::RenderTarget& target, Grid& grid) : m_target(target), m_grid(grid)
+Renderer::Renderer(sf::RenderTarget& target, Grid& grid) : m_target(target), m_grid(grid), m_pathfinder(new DijkstraPathfinder(grid))
 {
+}
+
+Renderer::~Renderer()
+{
+	delete m_pathfinder; // weird rn
 }
 
 void Renderer::render()
@@ -19,10 +25,23 @@ void Renderer::renderMenu()
 	if (ImGui::Button("Create Grid")) {
 		m_grid.createGrid(m_menuData.gridSize, m_menuData.nodeSize);
 	}
-	ImGui::Button("Clear Grid");
-	ImGui::Button("Save Grid");
-	ImGui::Button("Load Grid");
-	ImGui::Button("Find Path");
+	if (ImGui::Button("Clear Grid")) {
+		m_grid.clearGrid();
+	}
+	if (ImGui::Button("Save Grid")) {
+		m_grid.saveGrid("test.dat");
+	}
+	if (ImGui::Button("Load Grid")) {
+		m_grid.loadGrid("test.dat");
+	}
+
+	if (ImGui::Button("Find Path")) {
+		sf::Vector2i start(0, 0);
+		sf::Vector2i end(m_grid.getSize().x - 1, m_grid.getSize().y - 1);
+		std::vector<sf::Vector2i> path = m_pathfinder->findPath(start, end);
+		// pathfinding logic
+		// renderer must render this path with its animation etc
+	}
 	ImGui::Checkbox("Animate Path", &m_menuData.animatePath);
 	if (m_menuData.animatePath)
 		ImGui::SliderFloat("Animation Delay", &m_menuData.animationDelay, 0.0f, 1.0f);
