@@ -1,7 +1,7 @@
 #pragma once
 #include "utils.h"
 
-struct Cell
+struct Node
 {
 
 };
@@ -9,15 +9,25 @@ struct Cell
 class Grid
 {
 public:
-	Grid(Vec2i size) : m_size(size) {
-		m_data = new Cell[size.x * size.y];
+	Grid(Vec2i size, float nodeSize) {
+		createGrid(size, nodeSize);
 	}
 
-	Cell& getCell(int x, int y) { return m_data[y * m_size.x + x]; }
-	Cell& getCell(Vec2i pos) { return getCell(pos.x, pos.y); }
+	~Grid() { delete m_nodes; }
 
+	void createGrid(sf::Vector2i size, float nodeSize) {
+		m_size = size;
+		m_nodeSize = nodeSize;
+		m_nodes = new Node[size.x * size.y];
+	}
+
+	Node& getNode(int x, int y) { return m_nodes[y * m_size.x + x]; }
+	Node& getNode(Vec2i pos) { return getNode(pos.x, pos.y); }
+	Vec2i getSize() const { return m_size; }
+	float getNodeSize() const { return m_nodeSize; }
 
 private:
-	Cell* m_data;
+	Node* m_nodes = nullptr;
 	Vec2i m_size;
+	float m_nodeSize;
 };
