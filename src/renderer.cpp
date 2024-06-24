@@ -15,9 +15,9 @@ void Renderer::renderMenu()
 	if (!m_menuData.showMenu) return;
 	ImGui::Begin("Options", &m_menuData.showMenu); //ImGuiWindowFlags_ for options
 	ImGui::SliderInt2("Grid Size", (int*)&m_menuData.gridSize, 4, 32);
+	ImGui::SliderFloat("Node Size", &m_menuData.nodeSize, 10.0f, 100.0f);
 	if (ImGui::Button("Create Grid")) {
-		// Create grid logic
-
+		m_grid.createGrid(m_menuData.gridSize, m_menuData.nodeSize);
 	}
 	ImGui::Button("Clear Grid");
 	ImGui::Button("Save Grid");

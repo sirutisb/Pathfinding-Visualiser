@@ -38,7 +38,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pathfinder Visualiser");
 	ImGui::SFML::Init(window);
 	ImGui::GetIO().IniFilename = nullptr;
-	Grid grid({16, 16}, 65.0f);
+	Grid grid;
 	Renderer renderer(window, grid);
 	//sf::View view({ 0.0f, 0.0f }, { WINDOW_WIDTH, WINDOW_HEIGHT});
 	sf::View view = window.getDefaultView(); // maybe better since our origin is now top left of our window

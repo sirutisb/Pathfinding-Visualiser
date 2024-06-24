@@ -8,6 +8,7 @@ struct MenuData
 {
 	bool showMenu = true;
 	Vec2i gridSize = { 16,16 };
+	float nodeSize = 50.0f;
 	bool animatePath = false;
 	float animationDelay = 0.1f;
 };
