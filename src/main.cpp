@@ -44,9 +44,12 @@ int main()
 					menuData.showMenu = !menuData.showMenu;
 				break;
 			case::sf::Event::MouseButtonPressed:
+			{
 				const auto& button = evnt.mouseButton.button;
 				if (button == sf::Mouse::Button::Left)
 					keyInfo.leftMouse = true;
+			}
+				break;
 			case sf::Event::Resized:
 				const auto& size = evnt.size;
 				view.setSize(sf::Vector2f(size.width, size.height));
