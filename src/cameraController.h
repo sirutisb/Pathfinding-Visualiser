@@ -7,7 +7,6 @@ public:
 
     void handleEvent(const sf::Event& event);
     void update();
-    void applyView();
 
 private:
     sf::RenderWindow& window;

@@ -48,10 +48,5 @@ void CameraController::update() {
         view.move(delta);
         lastMousePosition = currentMousePosition;
     }
-    applyView();
-}
-
-void CameraController::applyView()
-{
     window.setView(view);
 }

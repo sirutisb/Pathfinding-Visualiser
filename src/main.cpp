@@ -4,9 +4,7 @@
 #include "renderer.h"
 //#include "utils.h"
 #include "cameraController.h"
-
-constexpr uint32_t WINDOW_WIDTH  = 1080;
-constexpr uint32_t WINDOW_HEIGHT = 1080;
+#include "config.h"
 
 void handleEvents(sf::RenderWindow& window, CameraController& cameraController, MenuData& menuData) {
 	sf::Event evnt;
@@ -34,13 +32,13 @@ void renderScene(sf::RenderWindow& window, Renderer& renderer) {
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pathfinder Visualiser");
+	sf::RenderWindow window(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "Pathfinder Visualiser");
 	ImGui::SFML::Init(window);
 	ImGui::GetIO().IniFilename = nullptr;
 	Grid grid;
 	Renderer renderer(window, grid);
 	sf::View view = window.getDefaultView();
-	window.setFramerateLimit(30);
+	window.setFramerateLimit(Config::fps);
 	window.setKeyRepeatEnabled(false);
 
 	sf::Clock deltaClock;
