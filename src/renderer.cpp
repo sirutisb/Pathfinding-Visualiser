@@ -24,6 +24,7 @@ void Renderer::renderMenu()
 	ImGui::SliderFloat("Node Size", &m_menuData.nodeSize, 10.0f, 100.0f);
 	if (ImGui::Button("Create Grid")) {
 		m_grid.createGrid(m_menuData.gridSize, m_menuData.nodeSize);
+		// todo: center view on the new grid creater (aka move the camera)
 	}
 	if (ImGui::Button("Clear Grid")) {
 		m_grid.clearGrid();
@@ -53,21 +54,34 @@ MenuData& Renderer::getMenuData()
 	return m_menuData;
 }
 
+// Function to create the grid vertex array
+sf::VertexArray createGrid(const sf::Vector2i& gridSize, float cellSize) {
+	sf::VertexArray grid(sf::Lines);
+
+	// Create horizontal lines
+	for (unsigned int i = 0; i <= gridSize.y; ++i) {
+		float y = i * cellSize;
+		grid.append(sf::Vertex(sf::Vector2f(0, y), sf::Color::White));
+		grid.append(sf::Vertex(sf::Vector2f(gridSize.y * cellSize, y), sf::Color::White));
+	}
+
+	// Create vertical lines
+	for (unsigned int j = 0; j <= gridSize.x; ++j) {
+		float x = j * cellSize;
+		grid.append(sf::Vertex(sf::Vector2f(x, 0), sf::Color::White));
+		grid.append(sf::Vertex(sf::Vector2f(x, gridSize.x * cellSize), sf::Color::White));
+	}
+
+	return grid;
+}
+
+
 void Renderer::renderGrid()
 {
 	const sf::Vector2i gridSize = m_grid.getSize();
 	const float nodeSize = m_grid.getNodeSize();
-	//sf::RectangleShape rect(sf::Vector2f(nodeSize - 1, nodeSize - 1)); // -1 for a small gap between nodes
-	sf::RectangleShape rect(sf::Vector2f(nodeSize - 4, nodeSize - 4)); // -1 for a small gap between nodes
-	rect.setFillColor(sf::Color::Cyan); // change depending on the node state
-	for (int y = 0; y < gridSize.y; y++) {
-		for (int x = 0; x < gridSize.x; x++) {
-			Node& node = m_grid.getNode(x, y);
-			sf::Vector2f nodePos(x * nodeSize, y * nodeSize);
-			rect.setPosition(nodePos);
-			m_target.draw(rect);
-		}
-	}
+	sf::VertexArray grid = createGrid(gridSize, nodeSize);
+	m_target.draw(grid);
 }
 
 
