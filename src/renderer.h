@@ -17,6 +17,7 @@ struct MenuData
 class Renderer
 {
 public:
+	//Renderer() = default;
 	Renderer(sf::RenderTarget& target, Grid& grid);
 	~Renderer();
 	void render();

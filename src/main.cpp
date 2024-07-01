@@ -1,55 +1,8 @@
-#include <imgui.h>
-#include <imgui-SFML.h>
-#include <SFML/Graphics.hpp>
-#include "renderer.h"
-//#include "utils.h"
-#include "cameraController.h"
-#include "config.h"
-
-void handleEvents(sf::RenderWindow& window, CameraController& cameraController, MenuData& menuData) {
-	sf::Event evnt;
-	while (window.pollEvent(evnt)) {
-		ImGui::SFML::ProcessEvent(evnt);
-		cameraController.handleEvent(evnt);
-		switch (evnt.type) {
-		case sf::Event::Closed:
-			window.close();
-			break;
-		case sf::Event::KeyPressed:
-			if (evnt.key.code == sf::Keyboard::Insert)
-				menuData.showMenu = !menuData.showMenu;
-			break;
-		}
-	}
-}
-
-void renderScene(sf::RenderWindow& window, Renderer& renderer) {
-	window.clear(sf::Color(18, 33, 43));
-	renderer.render();
-	ImGui::SFML::Render(window);
-	window.display();
-}
+#include "application.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "Pathfinder Visualiser");
-	ImGui::SFML::Init(window);
-	ImGui::GetIO().IniFilename = nullptr;
-	Grid grid;
-	Renderer renderer(window, grid);
-	sf::View view = window.getDefaultView();
-	window.setFramerateLimit(Config::fps);
-	window.setKeyRepeatEnabled(false);
-
-	sf::Clock deltaClock;
-	MenuData& menuData = renderer.getMenuData();
-	CameraController cameraController(window);
-	while (window.isOpen()) {
-		handleEvents(window, cameraController, menuData);
-		ImGui::SFML::Update(window, deltaClock.restart());
-		cameraController.update();
-		renderScene(window, renderer);
-	}
-	ImGui::SFML::Shutdown();
+	Application application("Pathfinder Visualiser");
+	application.run();
 	return 0;
 }

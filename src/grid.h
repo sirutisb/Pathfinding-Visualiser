@@ -2,9 +2,17 @@
 #include "utils.h"
 #include <string>
 
+enum class NodeType
+{
+	Empty,
+	Wall,
+	Start,
+	End
+};
+
 struct Node
 {
-
+	NodeType type;
 };
 
 class Grid

@@ -148,6 +148,7 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\cameraController.cpp" />
     <ClCompile Include="src\DijkstraPathfinder.cpp" />
     <ClCompile Include="src\grid.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="src\application.h" />
     <ClInclude Include="src\cameraController.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\DijkstraPathfinder.h" />
