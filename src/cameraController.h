@@ -1,11 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "config.h"
 
 class CameraController {
 public:
-    CameraController(sf::RenderWindow& window, float zoomFactor = 1.1f);
+    CameraController(sf::RenderWindow& window, float zoomFactor = Config::zoomFactor);
 
     void handleEvent(const sf::Event& event);
+    void resize(const sf::Event::SizeEvent& newSize);
+    void zoom(float delta);
+    void rightClick(bool pressed);
     void update();
 
 private:
