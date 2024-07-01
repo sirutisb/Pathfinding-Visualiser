@@ -1,2 +1,2 @@
-# Pathfinder Visualiser
- A pathfinding visualisation tool made in C++
+# Pathfinder Visualiser (WORK IN PROGRESS)
+ A pathfinding visualisation tool made in C++ using SFML and ImGui.
