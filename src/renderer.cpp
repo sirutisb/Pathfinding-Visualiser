@@ -59,28 +59,30 @@ sf::VertexArray createGrid(const sf::Vector2i& gridSize, float cellSize) {
 	sf::VertexArray grid(sf::Lines);
 
 	// Create horizontal lines
-	for (unsigned int i = 0; i <= gridSize.y; ++i) {
+	for (unsigned int i = 0; i <= gridSize.y; i++) {
 		float y = i * cellSize;
 		grid.append(sf::Vertex(sf::Vector2f(0, y), sf::Color::White));
 		grid.append(sf::Vertex(sf::Vector2f(gridSize.y * cellSize, y), sf::Color::White));
 	}
 
 	// Create vertical lines
-	for (unsigned int j = 0; j <= gridSize.x; ++j) {
+	for (unsigned int j = 0; j <= gridSize.x; j++) {
 		float x = j * cellSize;
 		grid.append(sf::Vertex(sf::Vector2f(x, 0), sf::Color::White));
 		grid.append(sf::Vertex(sf::Vector2f(x, gridSize.x * cellSize), sf::Color::White));
 	}
-
 	return grid;
 }
-
 
 void Renderer::renderGrid()
 {
 	const sf::Vector2i gridSize = m_grid.getSize();
 	const float nodeSize = m_grid.getNodeSize();
 	sf::VertexArray grid = createGrid(gridSize, nodeSize);
+
+	sf::RectangleShape gridBackground(sf::Vector2f(gridSize.x * nodeSize, gridSize.y * nodeSize));
+	gridBackground.setFillColor(sf::Color::Cyan);
+	m_target.draw(gridBackground);
 	m_target.draw(grid);
 }
 
