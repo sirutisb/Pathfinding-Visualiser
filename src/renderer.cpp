@@ -64,14 +64,14 @@ sf::VertexArray Renderer::createGridVertex(const sf::Vector2i& gridSize, float c
 	for (unsigned int i = 0; i <= gridSize.y; i++) {
 		float y = i * cellSize;
 		grid.append(sf::Vertex(sf::Vector2f(0, y), sf::Color::White));
-		grid.append(sf::Vertex(sf::Vector2f(gridSize.y * cellSize, y), sf::Color::White));
+		grid.append(sf::Vertex(sf::Vector2f(gridSize.x * cellSize, y), sf::Color::White));
 	}
 
 	// Create vertical lines
 	for (unsigned int j = 0; j <= gridSize.x; j++) {
 		float x = j * cellSize;
 		grid.append(sf::Vertex(sf::Vector2f(x, 0), sf::Color::White));
-		grid.append(sf::Vertex(sf::Vector2f(x, gridSize.x * cellSize), sf::Color::White));
+		grid.append(sf::Vertex(sf::Vector2f(x, gridSize.y * cellSize), sf::Color::White));
 	}
 	return grid;
 }
