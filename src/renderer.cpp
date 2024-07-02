@@ -24,16 +24,19 @@ void Renderer::renderMenu()
 	ImGui::SliderFloat("Node Size", &m_menuData.nodeSize, 10.0f, 100.0f);
 	if (ImGui::Button("Create Grid")) {
 		m_grid.createGrid(m_menuData.gridSize, m_menuData.nodeSize);
+		m_gridVertex = createGridVertex(m_menuData.gridSize, m_menuData.nodeSize);
 		// todo: center view on the new grid creater (aka move the camera)
 	}
 	if (ImGui::Button("Clear Grid")) {
 		m_grid.clearGrid();
+		m_gridVertex = createGridVertex(m_menuData.gridSize, m_menuData.nodeSize);
 	}
 	if (ImGui::Button("Save Grid")) {
 		m_grid.saveGrid("test.dat");
 	}
 	if (ImGui::Button("Load Grid")) {
 		m_grid.loadGrid("test.dat");
+		//m_gridVertex = createGridVertex(m_gri) To be implemented
 	}
 
 	if (ImGui::Button("Find Path")) {
@@ -54,8 +57,7 @@ MenuData& Renderer::getMenuData()
 	return m_menuData;
 }
 
-// Function to create the grid vertex array
-sf::VertexArray createGrid(const sf::Vector2i& gridSize, float cellSize) {
+sf::VertexArray Renderer::createGridVertex(const sf::Vector2i& gridSize, float cellSize) {
 	sf::VertexArray grid(sf::Lines);
 
 	// Create horizontal lines
@@ -78,12 +80,12 @@ void Renderer::renderGrid()
 {
 	const sf::Vector2i gridSize = m_grid.getSize();
 	const float nodeSize = m_grid.getNodeSize();
-	sf::VertexArray grid = createGrid(gridSize, nodeSize);
+	//sf::VertexArray grid = createGridVertex(gridSize, nodeSize);
 
 	sf::RectangleShape gridBackground(sf::Vector2f(gridSize.x * nodeSize, gridSize.y * nodeSize));
 	gridBackground.setFillColor(sf::Color::Cyan);
 	m_target.draw(gridBackground);
-	m_target.draw(grid);
+	m_target.draw(m_gridVertex);
 }
 
 

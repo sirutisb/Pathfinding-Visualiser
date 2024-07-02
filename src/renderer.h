@@ -22,6 +22,7 @@ public:
 	void render();
 	void renderMenu();
 	MenuData& getMenuData();
+	sf::VertexArray createGridVertex(const sf::Vector2i& gridSize, float cellSize);
 
 private:
 	void renderGrid();
@@ -29,5 +30,6 @@ private:
 	sf::RenderTarget& m_target;
 	MenuData m_menuData;
 	Grid& m_grid;
+	sf::VertexArray m_gridVertex;
 	Pathfinder* m_pathfinder;
 };

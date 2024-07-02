@@ -22,5 +22,5 @@ private:
 	CameraController cameraController;
 	MenuData& menuData;
 
-	bool shift = false, ctrl = false;
+	bool shift = false, ctrl = false; // need to move these to a grid class or some sort of input management class?
 };
