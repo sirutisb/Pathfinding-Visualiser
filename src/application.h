@@ -11,9 +11,10 @@ public:
 
 private:
 	void handleEvents();
-	void handleKeyboardEvent(const sf::Event& evnt);
-	void handleMouseEvent(const sf::Event& evnt);
+	void handleEvent(const sf::Event& ev);
+	void processInput();
 	void renderScene();
+	// may need functions for dealing with a single instance of a key down event
 
 	sf::RenderWindow window;
 	sf::Clock deltaClock;
@@ -22,5 +23,6 @@ private:
 	CameraController cameraController;
 	MenuData& menuData;
 
-	bool shift = false, ctrl = false; // need to move these to a grid class or some sort of input management class?
+	bool m_keyBuffer[sf::Keyboard::KeyCount]{ false };
+	bool m_buttonBuffer[sf::Mouse::ButtonCount]{ false };
 };

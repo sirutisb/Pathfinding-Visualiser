@@ -9,11 +9,6 @@ CameraController::CameraController(sf::RenderWindow& window, float zoomFactor)
 {
 }
 
-void CameraController::handleEvent(const sf::Event& event)
-{
-    // unused - (deprecated or wtv u call it)
-}
-
 void CameraController::resize(const sf::Event::SizeEvent& newSize)
 {
     view.setSize(sf::Vector2f(newSize.width, newSize.height) / zoomLevel);
@@ -28,10 +23,9 @@ void CameraController::zoom(float delta)
 
 void CameraController::rightClick(bool pressed)
 {
-    isRightClicking = pressed;
-    if (isRightClicking)
+    if (pressed && !isRightClicking)
         lastMousePosition = sf::Mouse::getPosition(window);
-
+    isRightClicking = pressed;
 }
 
 void CameraController::update() {

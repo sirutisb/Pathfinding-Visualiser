@@ -18,7 +18,10 @@ void Application::run()
 {
 	while (window.isOpen()) {
 		handleEvents();
+		processInput();
 		ImGui::SFML::Update(window, deltaClock.restart());
+
+		//printf("RightClick: %s\n", m_buttonBuffer[sf::Mouse::Right] ? "true" : "false");
 		cameraController.update();
 		renderScene();
 	}
@@ -27,59 +30,89 @@ void Application::run()
 
 void Application::handleEvents()
 {
-	sf::Event evnt;
-	while (window.pollEvent(evnt)) {
-		ImGui::SFML::ProcessEvent(evnt);
-		//cameraController.handleEvent(evnt); // todo: maybe handle this in handlemousemove function
+	sf::Event ev;
+	while (window.pollEvent(ev)) {
+		ImGui::SFML::ProcessEvent(ev);
+		handleEvent(ev);
 		//gridManager.handleEvent(evnt);
-		switch (evnt.type) {
-		case sf::Event::Closed:
-			window.close();
-			break;
-		case sf::Event::Resized:
-			cameraController.resize(evnt.size);
-			break;
-		case::sf::Event::MouseWheelScrolled:
-			cameraController.zoom(evnt.mouseWheelScroll.delta);
-			break;
-		case sf::Event::KeyPressed:
-		case sf::Event::KeyReleased:
-			handleKeyboardEvent(evnt);
-			break;
-		case sf::Event::MouseButtonPressed:
-		case::sf::Event::MouseButtonReleased:
-			handleMouseEvent(evnt);
-			break;
-		default:
-			break;
-		}
 	}
 }
 
-void Application::handleKeyboardEvent(const sf::Event& evnt)
+//void Application::handleKeyboardEvent(const sf::Event& evnt)
+//{
+//	const bool keyPressed = evnt.type == sf::Event::KeyPressed; // otherwise key is released
+//	const sf::Keyboard::Key& key = evnt.key.code;
+//	if (keyPressed) {
+//		if (key == sf::Keyboard::Insert)
+//			menuData.showMenu = !menuData.showMenu;
+//	}
+//	else {
+//		// handle mouse released
+//	}
+//
+//	if (key == sf::Keyboard::LShift)
+//		shift = keyPressed;
+//	else if (key == sf::Keyboard::LControl)
+//		ctrl = keyPressed;
+//}
+
+
+void Application::handleEvent(const sf::Event& ev)
 {
-	const bool keyPressed = evnt.type == sf::Event::KeyPressed; // otherwise key is released
-	const sf::Keyboard::Key& key = evnt.key.code;
-	if (keyPressed) {
-		if (key == sf::Keyboard::Insert)
+	switch (ev.type) {
+	case sf::Event::Closed:
+		window.close();
+		break;
+	case sf::Event::Resized:
+		cameraController.resize(ev.size);
+		break;
+	case sf::Event::MouseWheelScrolled:
+		cameraController.zoom(ev.mouseWheelScroll.delta);
+		break;
+	case sf::Event::KeyPressed:
+		m_keyBuffer[ev.key.code] = true;
+		if (ev.key.code == sf::Keyboard::Insert)
 			menuData.showMenu = !menuData.showMenu;
-	}
-	else {
-		// handle mouse released
+		break;
+	case sf::Event::KeyReleased:
+		m_keyBuffer[ev.key.code] = false;
+		break;
+	case sf::Event::MouseButtonPressed:
+		m_buttonBuffer[ev.mouseButton.button] = true;
+		break;
+	case sf::Event::MouseButtonReleased:
+		m_buttonBuffer[ev.mouseButton.button] = false;
+		break;
+	default:
+		break;
 	}
 
-	if (key == sf::Keyboard::LShift)
-		shift = keyPressed;
-	else if (key == sf::Keyboard::LControl)
-		ctrl = keyPressed;
+	/*switch (evnt.type) {
+	case sf::Event::Closed:
+		window.close();
+		break;
+	case sf::Event::Resized:
+		cameraController.resize(evnt.size);
+		break;
+	case::sf::Event::MouseWheelScrolled:
+		cameraController.zoom(evnt.mouseWheelScroll.delta);
+		break;
+	case sf::Event::KeyPressed:
+	case sf::Event::KeyReleased:
+		handleKeyboardEvent(evnt);
+		break;
+	case sf::Event::MouseButtonPressed:
+	case::sf::Event::MouseButtonReleased:
+		handleMouseEvent(evnt);
+		break;
+	default:
+		break;
+	}*/
 }
 
-void Application::handleMouseEvent(const sf::Event& evnt)
+void Application::processInput()
 {
-	bool pressed = evnt.type == sf::Event::MouseButtonPressed; // otherwise mouse is released
-	const sf::Event::MouseButtonEvent& mouse = evnt.mouseButton;
-	if (mouse.button == sf::Mouse::Right)
-		cameraController.rightClick(pressed);
+	cameraController.rightClick(m_buttonBuffer[sf::Mouse::Right]);
 }
 
 void Application::renderScene()
