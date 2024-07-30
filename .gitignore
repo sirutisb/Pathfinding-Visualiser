@@ -33,4 +33,5 @@
 
 # Other
 .vs
+*.ini
 build/
