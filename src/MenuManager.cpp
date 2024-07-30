@@ -14,7 +14,7 @@ void MenuManager::render(sf::RenderWindow& window)
 	ImGui::SliderInt2("Grid Size", (int*)&menuData.gridSize, 4, 32);
 	ImGui::SliderFloat("Node Size", &menuData.nodeSize, 10.0f, 100.0f);
 	if (ImGui::Button("Create Grid")) {
-		m_grid.resize(menuData.gridSize[0], menuData.gridSize[1]);
+		m_grid.resize(menuData.gridSize.x, menuData.gridSize.y);
 		// todo: center view on the new grid creater (aka move the camera)
 	}
 	if (ImGui::Button("Clear Grid")) {

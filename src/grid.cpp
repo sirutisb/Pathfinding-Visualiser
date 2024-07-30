@@ -36,5 +36,8 @@ sf::VertexArray createGridVertex(const sf::Vector2i& gridSize, float cellSize) {
 void Grid::render(sf::RenderWindow& window)
 {
 	auto gv = createGridVertex({ m_width, m_height }, 45.0f);
+	sf::RectangleShape grid_bg{ sf::Vector2f{m_width * 45.0f, m_height * 45.0f} };
+	grid_bg.setFillColor(sf::Color::Cyan);
+	window.draw(grid_bg);
 	window.draw(gv);
 }

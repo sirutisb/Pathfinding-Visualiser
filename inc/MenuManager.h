@@ -5,7 +5,7 @@
 
 struct MenuData
 {
-	int gridSize[2]{ 8, 8 };
+	sf::Vector2i gridSize{ 8, 8 };
 	float nodeSize = 45.0f;
 	bool animatePath = false;
 	float animationDelay = 0.250f;
