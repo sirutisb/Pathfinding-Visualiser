@@ -1,8 +1,8 @@
-#include "application.h"
+#include "Application.h"
 
 int main()
 {
-	Application application("Pathfinder Visualiser");
-	application.run();
+	Application app{ "Pathfinding Visualiser" };
+	app.Run();
 	return 0;
 }

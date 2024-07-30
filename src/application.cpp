@@ -1,124 +1,61 @@
-#include "application.h"
-#include "config.h"
-#include <imgui-SFML.h>
+#include "Application.h"
+#include "Config.h"
 
-Application::Application(const char* windowName) :
-	window(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), windowName),
-	renderer(window, grid),
-	cameraController(window),
-	menuData(renderer.getMenuData())
+Application::Application(const char* windowName)
+	: m_window{sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), windowName}
+	, m_grid{0, 0}
+	, m_camera{m_window}
+	, m_menu{m_grid}
 {
-	ImGui::SFML::Init(window);
-	ImGui::GetIO().IniFilename = nullptr;
-	window.setFramerateLimit(Config::fps);
-	window.setKeyRepeatEnabled(false);
+	ImGui::SFML::Init(m_window);
+	m_window.setFramerateLimit(Config::FPS_LIMIT);
+	m_window.setKeyRepeatEnabled(false);
 }
 
-void Application::run()
+void Application::Run()
 {
-	while (window.isOpen()) {
+	while (m_window.isOpen()) {
 		handleEvents();
-		processInput();
-		ImGui::SFML::Update(window, deltaClock.restart());
-
-		//printf("RightClick: %s\n", m_buttonBuffer[sf::Mouse::Right] ? "true" : "false");
-		cameraController.update();
-		renderScene();
+		m_camera.update();
+		render();
 	}
 	ImGui::SFML::Shutdown();
 }
-
+ 
 void Application::handleEvents()
 {
 	sf::Event ev;
-	while (window.pollEvent(ev)) {
-		ImGui::SFML::ProcessEvent(ev);
-		handleEvent(ev);
-		//gridManager.handleEvent(evnt);
+	while (m_window.pollEvent(ev)) {
+		if (m_menu.isOpen())
+			ImGui::SFML::ProcessEvent(m_window, ev);
+		m_camera.handleEvent(ev);
+		switch (ev.type)
+		{
+		case sf::Event::Closed:
+			m_window.close();
+			break;
+		case sf::Event::KeyPressed:
+			if (ev.key.code == sf::Keyboard::Insert)
+				m_menu.toggle();
+			break;
+		default:
+			break;
+		}
 	}
+	if (m_menu.isOpen())
+		ImGui::SFML::Update(m_window, m_deltaClock.restart());
 }
 
-//void Application::handleKeyboardEvent(const sf::Event& evnt)
-//{
-//	const bool keyPressed = evnt.type == sf::Event::KeyPressed; // otherwise key is released
-//	const sf::Keyboard::Key& key = evnt.key.code;
-//	if (keyPressed) {
-//		if (key == sf::Keyboard::Insert)
-//			menuData.showMenu = !menuData.showMenu;
-//	}
-//	else {
-//		// handle mouse released
-//	}
-//
-//	if (key == sf::Keyboard::LShift)
-//		shift = keyPressed;
-//	else if (key == sf::Keyboard::LControl)
-//		ctrl = keyPressed;
-//}
 
-
-void Application::handleEvent(const sf::Event& ev)
+void Application::render()
 {
-	switch (ev.type) {
-	case sf::Event::Closed:
-		window.close();
-		break;
-	case sf::Event::Resized:
-		cameraController.resize(ev.size);
-		break;
-	case sf::Event::MouseWheelScrolled:
-		cameraController.zoom(ev.mouseWheelScroll.delta);
-		break;
-	case sf::Event::KeyPressed:
-		m_keyBuffer[ev.key.code] = true;
-		if (ev.key.code == sf::Keyboard::Insert)
-			menuData.showMenu = !menuData.showMenu;
-		break;
-	case sf::Event::KeyReleased:
-		m_keyBuffer[ev.key.code] = false;
-		break;
-	case sf::Event::MouseButtonPressed:
-		m_buttonBuffer[ev.mouseButton.button] = true;
-		break;
-	case sf::Event::MouseButtonReleased:
-		m_buttonBuffer[ev.mouseButton.button] = false;
-		break;
-	default:
-		break;
-	}
+	m_window.clear(sf::Color(18, 33, 43));
 
-	/*switch (evnt.type) {
-	case sf::Event::Closed:
-		window.close();
-		break;
-	case sf::Event::Resized:
-		cameraController.resize(evnt.size);
-		break;
-	case::sf::Event::MouseWheelScrolled:
-		cameraController.zoom(evnt.mouseWheelScroll.delta);
-		break;
-	case sf::Event::KeyPressed:
-	case sf::Event::KeyReleased:
-		handleKeyboardEvent(evnt);
-		break;
-	case sf::Event::MouseButtonPressed:
-	case::sf::Event::MouseButtonReleased:
-		handleMouseEvent(evnt);
-		break;
-	default:
-		break;
-	}*/
+	sf::CircleShape circle(200.0f, 32);
+	circle.setFillColor(sf::Color(0, 255, 0));
+	m_window.draw(circle);
+	m_grid.render(m_window);
+	m_menu.render(m_window);
+	m_window.display();
 }
 
-void Application::processInput()
-{
-	cameraController.rightClick(m_buttonBuffer[sf::Mouse::Right]);
-}
-
-void Application::renderScene()
-{
-	window.clear(sf::Color(18, 33, 43));
-	renderer.render();
-	ImGui::SFML::Render(window);
-	window.display();
-}
