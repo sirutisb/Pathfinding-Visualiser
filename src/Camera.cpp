@@ -1,13 +1,10 @@
 #include "Camera.h"
 
-#include <iostream>
-
-Camera::Camera(sf::RenderTarget& target)
-	: target{ target }
-	, zoomLevel{ 1.0f }
-	, view{ target.getDefaultView() }
+Camera::Camera(sf::RenderWindow& window)
+	: m_window{window}
+	, m_zoomLevel{1.0f}
+	, m_view{window.getDefaultView()}
 {
-
 }
 
 void Camera::handleEvent(const sf::Event& ev)
@@ -17,25 +14,24 @@ void Camera::handleEvent(const sf::Event& ev)
 	case sf::Event::MouseWheelScrolled:
 	{
 		float deltaZoom = ev.mouseWheelScroll.delta < 0 ? 1.1f : 1.0f / 1.1f;
-		zoomLevel *= deltaZoom;
-		view.zoom(deltaZoom);
+		m_zoomLevel *= deltaZoom;
+		m_view.zoom(deltaZoom);
 	}
 		applyView();
-		std::cout << "Zooming: " << zoomLevel << "\n";
 		break;
 	case sf::Event::MouseButtonPressed:
 		if (ev.mouseButton.button == sf::Mouse::Right) {
-			dragging = true;
-			lastMousePosition = target.mapPixelToCoords(sf::Mouse::getPosition(dynamic_cast<sf::WindowBase&>(target)));
+			m_dragging = true;
+			lastMousePosition = getMouseWorld();
 		}
 		break;
 	case sf::Event::MouseButtonReleased:
 		if (ev.mouseButton.button == sf::Mouse::Right)
-			dragging = false;
+			m_dragging = false;
 		break;
 	case sf::Event::Resized:
-		view.setSize(ev.size.width, ev.size.height);
-		view.zoom(zoomLevel);
+		m_view.setSize(static_cast<float>(ev.size.width), static_cast<float>(ev.size.height));
+		m_view.zoom(m_zoomLevel);
 		applyView();
 		break;
 	default:
@@ -45,16 +41,21 @@ void Camera::handleEvent(const sf::Event& ev)
 
 void Camera::applyView()
 {
-	target.setView(view);
+	m_window.setView(m_view);
 }
 
 void Camera::update()
 {
-	if (dragging) {
-		sf::Vector2f currentMousePosition = target.mapPixelToCoords(sf::Mouse::getPosition(dynamic_cast<sf::WindowBase&>(target)));
+	if (m_dragging) {
+		sf::Vector2f currentMousePosition = getMouseWorld();
 		sf::Vector2f delta = lastMousePosition - currentMousePosition;
-		view.move(delta);
+		lastMousePosition = getMouseWorld();
+		m_view.move(delta);
 		applyView();
-		lastMousePosition = target.mapPixelToCoords(sf::Mouse::getPosition(dynamic_cast<sf::WindowBase&>(target)));
 	}
+}
+
+sf::Vector2f Camera::getMouseWorld()
+{
+	return m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 }

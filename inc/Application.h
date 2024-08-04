@@ -5,7 +5,7 @@
 
 #include "Grid.h"
 #include "Camera.h"
-#include "MenuManager.h"
+#include "Menu.h"
 
 class Application {
 public:
@@ -21,5 +21,5 @@ private:
 
 	Grid m_grid;
 	Camera m_camera;
-	MenuManager m_menu;
+	Menu m_menu;
 };

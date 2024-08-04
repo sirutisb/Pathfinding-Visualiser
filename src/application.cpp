@@ -38,6 +38,22 @@ void Application::handleEvents()
 			if (ev.key.code == sf::Keyboard::Insert)
 				m_menu.toggle();
 			break;
+
+		case sf::Event::MouseButtonPressed:
+			if (ev.mouseButton.button == sf::Mouse::Left)
+				// left mouse
+			break;
+		case sf::Event::MouseButtonReleased:
+			if (ev.mouseButton.button == sf::Mouse::Left)
+				// left mouse released
+			break;
+		case sf::Event::MouseMoved:
+		{
+			sf::Vector2i mousePos = *reinterpret_cast<sf::Vector2i*>(&ev.mouseMove); // hacky type punning
+			sf::Vector2f worldPos = m_window.mapPixelToCoords(mousePos);
+
+		}
+			break;
 		default:
 			break;
 		}
@@ -50,10 +66,6 @@ void Application::handleEvents()
 void Application::render()
 {
 	m_window.clear(sf::Color(18, 33, 43));
-
-	sf::CircleShape circle(200.0f, 32);
-	circle.setFillColor(sf::Color(0, 255, 0));
-	m_window.draw(circle);
 	m_grid.render(m_window);
 	m_menu.render(m_window);
 	m_window.display();

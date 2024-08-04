@@ -42,7 +42,7 @@
     <ClCompile Include="src\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuManager.cpp">
+    <ClCompile Include="src\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,7 +89,10 @@
     <ClInclude Include="inc\Cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MenuManager.h">
+    <ClInclude Include="inc\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Pathfinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

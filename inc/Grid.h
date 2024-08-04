@@ -7,7 +7,9 @@ class Grid {
 public:
 	Grid(int width, int height);
 	void resize(int width, int height);
-	//Cell& getCell(int x, int y);
+	void save(const std::string& filename);
+	void load(const std::string& filename);
+	void clear();
 	void render(sf::RenderWindow& window);
 private:
 	int m_width, m_height;

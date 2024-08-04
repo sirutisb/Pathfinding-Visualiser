@@ -1,6 +1,8 @@
 #include "Grid.h"
 
-Grid::Grid(int width, int height) : m_width{ 0 }, m_height{ 0 }
+Grid::Grid(int width, int height)
+	: m_width{0}
+	,m_height{0}
 {
 	resize(width, height);
 }
@@ -12,6 +14,18 @@ void Grid::resize(int width, int height)
 	cells.resize(height);
 	for (std::vector<Cell>& row : cells)
 		row.resize(width);
+}
+
+void Grid::save(const std::string& filename)
+{
+}
+
+void Grid::load(const std::string& filename)
+{
+}
+
+void Grid::clear()
+{
 }
 
 sf::VertexArray createGridVertex(const sf::Vector2i& gridSize, float cellSize) {
