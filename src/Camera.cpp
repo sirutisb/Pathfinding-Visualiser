@@ -2,6 +2,7 @@
 
 Camera::Camera(sf::RenderWindow& window)
 	: m_window{window}
+	, m_dragging{false}
 	, m_zoomLevel{1.0f}
 	, m_view{window.getDefaultView()}
 {

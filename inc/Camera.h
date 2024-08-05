@@ -10,11 +10,10 @@ public:
 private:
 	sf::Vector2f getMouseWorld();
 
-
 	sf::RenderWindow& m_window;
 	sf::View m_view;
 
 	float m_zoomLevel;
-	bool m_dragging = false;
+	bool m_dragging;
 	sf::Vector2f lastMousePosition;
 };

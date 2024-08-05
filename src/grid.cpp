@@ -1,8 +1,9 @@
 #include "Grid.h"
+#include "Config.h"
 
 Grid::Grid(int width, int height)
 	: m_width{0}
-	,m_height{0}
+	, m_height{0}
 {
 	resize(width, height);
 }
@@ -26,6 +27,11 @@ void Grid::load(const std::string& filename)
 
 void Grid::clear()
 {
+	for (int i = 0; i < m_height; i++) {
+		for (int j = 0; j < m_width; j++) {
+			cells[i][j].solid = false;
+		}
+	}
 }
 
 sf::VertexArray createGridVertex(const sf::Vector2i& gridSize, float cellSize) {
@@ -49,9 +55,30 @@ sf::VertexArray createGridVertex(const sf::Vector2i& gridSize, float cellSize) {
 
 void Grid::render(sf::RenderWindow& window)
 {
-	auto gv = createGridVertex({ m_width, m_height }, 45.0f);
-	sf::RectangleShape grid_bg{ sf::Vector2f{m_width * 45.0f, m_height * 45.0f} };
+	auto gv = createGridVertex({ m_width, m_height }, Config::NODE_SIZE);
+	sf::RectangleShape grid_bg{ sf::Vector2f{ m_width * Config::NODE_SIZE, m_height * Config::NODE_SIZE } };
 	grid_bg.setFillColor(sf::Color::Cyan);
 	window.draw(grid_bg);
+
+	sf::RectangleShape solid{ sf::Vector2f{Config::NODE_SIZE, Config::NODE_SIZE} };
+	solid.setFillColor(sf::Color(45, 45, 45));
+	for (int i = 0; i < m_height; i++) {
+		for (int j = 0; j < m_width; j++) {
+			if (cells[i][j].solid) {
+				solid.setPosition(sf::Vector2f{Config::NODE_SIZE * j, Config::NODE_SIZE * i});
+				window.draw(solid);
+			}
+		}
+	}
+
 	window.draw(gv);
+}
+
+void Grid::toggle(sf::Vector2i pos)
+{
+	if (pos.x < 0 || pos.x >= m_width || pos.y < 0 || pos.y >= m_height)
+		return;
+
+	Cell& cell = cells[pos.y][pos.x];
+	cell.solid = !cell.solid;
 }

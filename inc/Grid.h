@@ -11,6 +11,8 @@ public:
 	void load(const std::string& filename);
 	void clear();
 	void render(sf::RenderWindow& window);
+
+	void toggle(sf::Vector2i pos);
 private:
 	int m_width, m_height;
 	std::vector<std::vector<Cell>> cells;

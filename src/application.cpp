@@ -21,9 +21,28 @@ void Application::Run()
 	}
 	ImGui::SFML::Shutdown();
 }
- 
+
+// Major code cleanup required below....
+#include <iostream>
+sf::Vector2i getMouseGrid(sf::Vector2i mousePos, sf::RenderWindow& window) {
+	//sf::Vector2i mousePos = *reinterpret_cast<sf::Vector2i*>(&ev.mouseMove); // hacky type punning
+	sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
+	sf::Vector2i clickedGrid{
+		static_cast<int>(worldPos.x / Config::NODE_SIZE),
+		static_cast<int>(worldPos.y / Config::NODE_SIZE)};
+	return clickedGrid;
+}
+
+void toggleCell(int x, int y, Grid& grid) {
+	std::cout << "Grid Toggled: " << x << "," << y << "\n";
+	grid.toggle({ x,y });
+}
+
 void Application::handleEvents()
 {
+	// TODO - check if imgui menu is in context, then ignore the click event
+	static bool leftMouse = false;
+	static sf::Vector2i lastClickedGrid{-1, -1};
 	sf::Event ev;
 	while (m_window.pollEvent(ev)) {
 		if (m_menu.isOpen())
@@ -40,19 +59,25 @@ void Application::handleEvents()
 			break;
 
 		case sf::Event::MouseButtonPressed:
-			if (ev.mouseButton.button == sf::Mouse::Left)
-				// left mouse
+			if (ev.mouseButton.button == sf::Mouse::Left) {
+				leftMouse = true;
+				sf::Vector2i clickedGrid = getMouseGrid(*reinterpret_cast<sf::Vector2i*>(&ev.mouseButton.x), m_window);
+				lastClickedGrid = clickedGrid;
+				toggleCell(clickedGrid.x, clickedGrid.y, m_grid);
+			}
 			break;
 		case sf::Event::MouseButtonReleased:
 			if (ev.mouseButton.button == sf::Mouse::Left)
-				// left mouse released
+				leftMouse = false;
 			break;
 		case sf::Event::MouseMoved:
-		{
-			sf::Vector2i mousePos = *reinterpret_cast<sf::Vector2i*>(&ev.mouseMove); // hacky type punning
-			sf::Vector2f worldPos = m_window.mapPixelToCoords(mousePos);
-
-		}
+			if (leftMouse) {
+				sf::Vector2i clickedGrid = getMouseGrid(*reinterpret_cast<sf::Vector2i*>(&ev.mouseMove), m_window);
+				if (clickedGrid != lastClickedGrid) {
+					toggleCell(clickedGrid.x, clickedGrid.y, m_grid);
+					lastClickedGrid = clickedGrid;
+				}
+			}
 			break;
 		default:
 			break;
