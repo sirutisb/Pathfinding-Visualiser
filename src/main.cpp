@@ -2,7 +2,7 @@
 
 int main()
 {
-	Application app{ "Pathfinding Visualiser" };
-	app.Run();
+	Application app{"Pathfinding Visualiser"};
+	app.run();
 	return 0;
 }

@@ -12,7 +12,7 @@ Application::Application(const char* windowName)
 	m_window.setKeyRepeatEnabled(false);
 }
 
-void Application::Run()
+void Application::run()
 {
 	while (m_window.isOpen()) {
 		handleEvents();
@@ -95,4 +95,3 @@ void Application::render()
 	m_menu.render(m_window);
 	m_window.display();
 }
-

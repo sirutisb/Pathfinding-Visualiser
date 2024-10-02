@@ -10,7 +10,7 @@
 class Application {
 public:
 	Application(const char* windowName);
-	void Run();
+	void run();
 
 private:
 	void handleEvents();

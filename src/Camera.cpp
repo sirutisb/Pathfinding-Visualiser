@@ -50,9 +50,9 @@ void Camera::update()
 	if (m_dragging) {
 		sf::Vector2f currentMousePosition = getMouseWorld();
 		sf::Vector2f delta = lastMousePosition - currentMousePosition;
-		lastMousePosition = getMouseWorld();
 		m_view.move(delta);
 		applyView();
+		lastMousePosition = getMouseWorld();
 	}
 }
 
