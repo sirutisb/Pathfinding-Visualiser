@@ -1,25 +1,25 @@
 #pragma once
+#include <string>
 #include <SFML/Graphics.hpp>
-#include <imgui.h>
-#include <imgui-SFML.h>
-
-#include "Grid.h"
-#include "Camera.h"
-#include "Menu.h"
+//#include <imgui.h>
+//#include <imgui-SFML.h>
+//
+//#include "Grid.h"
+//#include "Camera.h"
+//#include "Menu.h"
 
 class Application {
 public:
-	Application(const char* windowName);
+	Application(int width, int height, const std::string& title);
 	void run();
 
 private:
-	void handleEvents();
+	void processEvents();
 	void render();
 
-	sf::RenderWindow m_window;
-	sf::Clock m_deltaClock;
+	sf::RenderWindow window;
+	sf::View cameraView;
+	sf::Clock clock;
 
-	Grid m_grid;
-	Camera m_camera;
-	Menu m_menu;
+	//Grid grid;
 };
