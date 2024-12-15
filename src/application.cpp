@@ -37,5 +37,11 @@ void Application::processEvents()
 
 void Application::render()
 {
-
+	window.clear();
+	sf::RectangleShape rec({ 50, 150 });
+	rec.setPosition({ 800, 800 });
+	window.draw(rec);
+	// render grid
+	// render menu
+	window.display();
 }
