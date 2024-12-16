@@ -3,10 +3,11 @@
 #include <SFML/Graphics.hpp>
 //#include <imgui.h>
 //#include <imgui-SFML.h>
-//
-//#include "Grid.h"
-//#include "Camera.h"
-//#include "Menu.h"
+
+#include "grid.h"
+#include "gridRenderer.h"
+#include "camera.h"
+#include "menu.h"
 
 class Application {
 public:
@@ -21,5 +22,8 @@ private:
 	sf::View cameraView;
 	sf::Clock clock;
 
-	//Grid grid;
+	GridRenderer gridRenderer;
+	Grid grid;
+	Camera camera;
+	Menu menu;
 };

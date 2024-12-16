@@ -4,6 +4,8 @@
 
 Application::Application(int width, int height, const std::string& title)
 	: window(sf::VideoMode(width, height), title)
+	, grid()
+	, gridRenderer(grid, 75.f)
 {
 	ImGui::SFML::Init(window);
 	window.setFramerateLimit(20);
@@ -38,10 +40,8 @@ void Application::processEvents()
 void Application::render()
 {
 	window.clear();
-	sf::RectangleShape rec({ 50, 150 });
-	rec.setPosition({ 800, 800 });
-	window.draw(rec);
-	// render grid
-	// render menu
+	gridRenderer.render(window);
+	// animations rendered here? or maybe grid renderer idk yet
+	menu.render();
 	window.display();
 }
