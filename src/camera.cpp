@@ -4,7 +4,8 @@ Camera::Camera(sf::RenderWindow& window)
 	: window(window)
 	, view(window.getDefaultView())
 	, dragging(false)
-{}
+{
+}
 
 void Camera::handleEvent(sf::Event& ev)
 {
@@ -16,7 +17,7 @@ void Camera::handleEvent(sf::Event& ev)
 	case sf::Event::MouseButtonPressed:
 		if (ev.mouseButton.button == sf::Mouse::Right) {
 			dragging = true;
-			lastMousePosition = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+			prevWorldPos = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
 		}
 		break;
 	case sf::Event::MouseButtonReleased:
@@ -32,12 +33,12 @@ void Camera::handleEvent(sf::Event& ev)
 void Camera::update()
 {
 	if (!dragging) return;
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-	sf::Vector2f currentMousePosition = window.mapPixelToCoords(mousePosition);
-	sf::Vector2f delta = lastMousePosition - currentMousePosition;
+	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+	sf::Vector2f currWorldPos = window.mapPixelToCoords(mousePos);
+	sf::Vector2f delta = prevWorldPos - currWorldPos;
+	prevWorldPos = currWorldPos + delta;
 	view.move(delta);
 	window.setView(view);
-	lastMousePosition = window.mapPixelToCoords(mousePosition);
 }
 
 void Camera::zoom(float deltaScroll)

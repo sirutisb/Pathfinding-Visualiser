@@ -14,5 +14,5 @@ private:
 	sf::View view;
 
 	bool dragging;
-	sf::Vector2f lastMousePosition;
+	sf::Vector2f prevWorldPos;
 };
