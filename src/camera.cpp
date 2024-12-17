@@ -12,7 +12,7 @@ void Camera::handleEvent(sf::Event& ev)
 	{
 	case sf::Event::MouseWheelScrolled:
 		//zoom(ev.mouseWheelScroll.delta);
-		zoom(ev.mouseWheelScroll.delta);
+		//zoom(ev.mouseWheelScroll.delta);
 		zoomTest(ev.mouseWheelScroll.delta);
 		break;
 	case sf::Event::MouseButtonPressed:
@@ -48,18 +48,16 @@ void Camera::update()
 void Camera::zoom(float deltaScroll)
 {
 	// TODO: add multiplier constants
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::Vector2f prevMouseWorld = screenToWorld(mousePosition.x, mousePosition.y);
+
 	float deltaZoom = deltaScroll < 0 ? 1.1f : 1.0f / 1.1f;
 	view.zoom(deltaZoom);
 	window.setView(view);
-}
 
-void Camera::zoomTest(float deltaZoom)
-{
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::Vector2f mouseWorld = screenToWorld(mousePosition.x, mousePosition.y);
-	sf::Vector2f origin = view.getCenter();
-	sf::Vector2f delta = mouseWorld - origin;
-	view.move(delta / 6.0f);
+	sf::Vector2f deltaPos = prevMouseWorld - mouseWorld;
+	view.move(deltaPos);
 	window.setView(view);
 }
 
