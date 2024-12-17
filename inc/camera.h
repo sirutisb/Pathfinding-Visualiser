@@ -9,9 +9,6 @@ public:
 	void update();
 private:
 	void zoom(float deltaZoom);
-	void zoomTest(float deltaZoom);
-
-	sf::Vector2f screenToWorld(int x, int y);
 
 	sf::RenderWindow& window;
 	sf::View view;
