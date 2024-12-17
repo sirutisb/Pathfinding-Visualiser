@@ -11,8 +11,6 @@ void Camera::handleEvent(sf::Event& ev)
 	switch (ev.type)
 	{
 	case sf::Event::MouseWheelScrolled:
-		//zoom(ev.mouseWheelScroll.delta);
-		//zoom(ev.mouseWheelScroll.delta);
 		zoomTest(ev.mouseWheelScroll.delta);
 		break;
 	case sf::Event::MouseButtonPressed:
