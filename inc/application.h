@@ -9,9 +9,11 @@
 #include "camera.h"
 #include "menu.h"
 
+
 class Application {
 public:
 	Application(int width, int height, const std::string& title);
+	~Application();
 	void run();
 
 private:
@@ -27,4 +29,6 @@ private:
 	Grid grid;
 	Camera camera;
 	Menu menu;
+
+	static const sf::Color bgColor;
 };

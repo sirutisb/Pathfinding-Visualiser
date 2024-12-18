@@ -4,6 +4,7 @@ Camera::Camera(sf::RenderWindow& window)
 	: window(window)
 	, view(window.getDefaultView())
 	, dragging(false)
+	, zoomLevel(1.0f)
 {
 }
 
@@ -16,14 +17,20 @@ void Camera::handleEvent(sf::Event& ev)
 		break;
 	case sf::Event::MouseButtonPressed:
 		if (ev.mouseButton.button == sf::Mouse::Right) {
-			dragging = true;
 			prevWorldPos = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+			dragging = true;
 		}
 		break;
 	case sf::Event::MouseButtonReleased:
 		if (ev.mouseButton.button == sf::Mouse::Right) {
 			dragging = false;
 		}
+		view.getSize();
+		break;
+	case sf::Event::Resized:
+		view.setSize(static_cast<float>(ev.size.width), static_cast<float>(ev.size.height));
+		view.zoom(zoomLevel);
+		window.setView(view);
 		break;
 	default:
 		break;
@@ -48,6 +55,7 @@ void Camera::zoom(float deltaScroll)
 
 	// TODO: add multiplier constants
 	float deltaZoom = deltaScroll < 0 ? 1.1f : 1.0f / 1.1f;
+	zoomLevel *= deltaZoom;
 	view.zoom(deltaZoom);
 
 	sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePosition, view);

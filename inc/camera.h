@@ -14,5 +14,6 @@ private:
 	sf::View view;
 
 	bool dragging;
+	float zoomLevel;
 	sf::Vector2f prevWorldPos;
 };
