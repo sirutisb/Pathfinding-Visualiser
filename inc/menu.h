@@ -11,4 +11,12 @@ public:
 	bool isOpen() const;
 private:
 	bool show;
+
+	int gridSize[2];
+
+	int algorithmIndex;
+	const char* algorithms[2];
+
+	bool showAnimation;
+	float animationDelay;
 };

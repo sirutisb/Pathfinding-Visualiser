@@ -1,4 +1,5 @@
 #include "camera.h"
+#include <imgui.h>
 
 Camera::Camera(sf::RenderWindow& window)
 	: window(window)
@@ -13,9 +14,11 @@ void Camera::handleEvent(sf::Event& ev)
 	switch (ev.type)
 	{
 	case sf::Event::MouseWheelScrolled:
+		if (ImGui::GetIO().WantCaptureMouse) break;
 		zoom(ev.mouseWheelScroll.delta);
 		break;
 	case sf::Event::MouseButtonPressed:
+		if (ImGui::GetIO().WantCaptureMouse) break;
 		if (ev.mouseButton.button == sf::Mouse::Right) {
 			prevWorldPos = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
 			dragging = true;

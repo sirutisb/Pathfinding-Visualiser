@@ -1,5 +1,5 @@
 #include "Application.h"
-//#include <imgui.h>
+#include <imgui.h>
 #include <imgui-SFML.h>
 
 const sf::Color Application::bgColor = sf::Color(18, 33, 43);
@@ -45,6 +45,15 @@ void Application::processEvents()
 		case sf::Event::KeyPressed:
 			if (ev.key.code == sf::Keyboard::Insert)
 				menu.toggle();
+			break;
+		case sf::Event::MouseButtonPressed:
+			if (ImGui::GetIO().WantCaptureMouse) break;
+			if (ev.mouseButton.button == sf::Mouse::Left) {
+				//sf::Vector2f worldPos = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+				//int row = static_cast<int>(worldPos.y / cellSize);
+				//int col = static_cast<int>(worldPos.x / cellSize);
+				//grid.toggleCellState(row, col);
+			}
 			break;
 		default:
 			break;
