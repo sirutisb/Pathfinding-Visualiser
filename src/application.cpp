@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "application.h"
 #include <imgui.h>
 #include <imgui-SFML.h>
 
@@ -73,6 +73,6 @@ void Application::render()
 	window.clear(Application::bgColor);
 	gridRenderer.render(window);
 	// animations rendered here? or maybe grid renderer idk yet
-	menu.render(window);
+	menu.render(window, grid);
 	window.display();
 }

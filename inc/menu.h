@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "grid.h"
 class Menu
 {
 public:
 	Menu();
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window, Grid& grid);
 	void toggle();
 
 	bool isOpen() const;

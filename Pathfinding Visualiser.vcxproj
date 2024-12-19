@@ -157,6 +157,7 @@
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="inc\gridRenderer.cpp" />
+    <ClCompile Include="src\grid.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="inc\application.h" />
     <ClInclude Include="inc\camera.h" />
+    <ClInclude Include="inc\cell.h" />
     <ClInclude Include="inc\grid.h" />
     <ClInclude Include="inc\gridRenderer.h" />
     <ClInclude Include="inc\menu.h" />
