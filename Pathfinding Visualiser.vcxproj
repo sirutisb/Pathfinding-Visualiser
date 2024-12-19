@@ -156,11 +156,12 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\Grid.cpp" />
-    <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="inc\gridRenderer.cpp" />
+    <ClCompile Include="src\grid.cpp" />
+    <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig-SFML.h" />
@@ -172,13 +173,13 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
-    <ClInclude Include="inc\Application.h" />
-    <ClInclude Include="inc\Camera.h" />
-    <ClInclude Include="inc\Cell.h" />
-    <ClInclude Include="inc\Config.h" />
-    <ClInclude Include="inc\Grid.h" />
-    <ClInclude Include="inc\Menu.h" />
-    <ClInclude Include="inc\Pathfinder.h" />
+    <ClInclude Include="inc\application.h" />
+    <ClInclude Include="inc\camera.h" />
+    <ClInclude Include="inc\cell.h" />
+    <ClInclude Include="inc\grid.h" />
+    <ClInclude Include="inc\gridRenderer.h" />
+    <ClInclude Include="inc\menu.h" />
+    <ClInclude Include="inc\pathfinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
-#include "Application.h"
+#include "application.h"
 
 int main()
 {
-	Application app{"Pathfinding Visualiser"};
+	Application app(1920, 1080, "Pathfinding Visualiser");
 	app.run();
 	return 0;
 }
