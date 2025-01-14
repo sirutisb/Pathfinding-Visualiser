@@ -9,34 +9,34 @@ Camera::Camera(sf::RenderWindow& window)
 {
 }
 
-void Camera::handleEvent(sf::Event& ev)
+/*
+if (event->is<sf::Event::Closed>()) {
+			window.close();
+		} else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+			if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+				window.close();
+*/
+
+
+void Camera::handleEvent(const sf::Event& event)
 {
-	switch (ev.type)
-	{
-	case sf::Event::MouseWheelScrolled:
-		if (ImGui::GetIO().WantCaptureMouse) break;
-		zoom(ev.mouseWheelScroll.delta);
-		break;
-	case sf::Event::MouseButtonPressed:
-		if (ImGui::GetIO().WantCaptureMouse) break;
-		if (ev.mouseButton.button == sf::Mouse::Right) {
-			prevWorldPos = window.mapPixelToCoords({ ev.mouseButton.x, ev.mouseButton.y });
+	if (const auto* mouseScroll = event.getIf<sf::Event::MouseWheelScrolled>()) {
+		if (ImGui::GetIO().WantCaptureMouse) return;
+		zoom(mouseScroll->delta);
+	} else if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
+		if (ImGui::GetIO().WantCaptureMouse) return;
+		if (mousePressed->button == sf::Mouse::Button::Right) {
+			prevWorldPos = window.mapPixelToCoords(mousePressed->position);
 			dragging = true;
 		}
-		break;
-	case sf::Event::MouseButtonReleased:
-		if (ev.mouseButton.button == sf::Mouse::Right) {
+	} else if (const auto* mouseReleased = event.getIf<sf::Event::MouseButtonReleased>()) {
+		if (mouseReleased->button == sf::Mouse::Button::Right) {
 			dragging = false;
 		}
-		view.getSize();
-		break;
-	case sf::Event::Resized:
-		view.setSize(static_cast<float>(ev.size.width), static_cast<float>(ev.size.height));
+	} else if (const auto* windowResized = event.getIf<sf::Event::Resized>()) {
+		view.setSize(static_cast<sf::Vector2f>(windowResized->size));
 		view.zoom(zoomLevel);
 		window.setView(view);
-		break;
-	default:
-		break;
 	}
 }
 

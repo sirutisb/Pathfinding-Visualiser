@@ -12,7 +12,7 @@
 
 class Application {
 public:
-	Application(int width, int height, const std::string& title);
+	Application(const sf::Vector2u& size, const std::string& title);
 	~Application();
 	void run();
 
@@ -25,8 +25,8 @@ private:
 	sf::View cameraView;
 	sf::Clock clock;
 
-	GridRenderer gridRenderer;
 	Grid grid;
+	GridRenderer gridRenderer;
 	Camera camera;
 	Menu menu;
 

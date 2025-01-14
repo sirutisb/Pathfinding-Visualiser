@@ -5,7 +5,7 @@ class Camera
 {
 public:
 	Camera(sf::RenderWindow& window);
-	void handleEvent(sf::Event& ev);
+	void handleEvent(const sf::Event& event);
 	void update();
 private:
 	void zoom(float deltaZoom);

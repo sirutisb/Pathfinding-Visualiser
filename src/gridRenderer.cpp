@@ -29,20 +29,21 @@ void GridRenderer::render(sf::RenderWindow& window)
 
 sf::VertexArray GridRenderer::createGridVertex(const sf::Vector2i& gridSize)
 {
-	sf::VertexArray vertexArr(sf::Lines);
+	sf::VertexArray vertexArr(sf::PrimitiveType::Lines);
 
 	// Create horizontal lines
 	for (unsigned int i = 0; i <= gridSize.y; i++) {
 		float y = i * cellSize;
-		vertexArr.append(sf::Vertex(sf::Vector2f(0, y), sf::Color::White));
-		vertexArr.append(sf::Vertex(sf::Vector2f(gridSize.x * cellSize, y), sf::Color::White));
+		sf::Vertex vertex{{0, y}, sf::Color::White};
+		vertexArr.append({{0, y}, sf::Color::White});
+		vertexArr.append({{gridSize.x * cellSize, y}, sf::Color::White});
 	}
 
 	// Create vertical lines
 	for (unsigned int j = 0; j <= gridSize.x; j++) {
 		float x = j * cellSize;
-		vertexArr.append(sf::Vertex(sf::Vector2f(x, 0), sf::Color::White));
-		vertexArr.append(sf::Vertex(sf::Vector2f(x, gridSize.y * cellSize), sf::Color::White));
+		vertexArr.append({{x, 0}, sf::Color::White});
+		vertexArr.append({{x, gridSize.y * cellSize}, sf::Color::White});
 	}
 	return vertexArr;
 }
