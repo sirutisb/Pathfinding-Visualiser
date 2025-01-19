@@ -9,22 +9,11 @@ Camera::Camera(sf::RenderWindow& window)
 {
 }
 
-/*
-if (event->is<sf::Event::Closed>()) {
-			window.close();
-		} else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
-			if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
-				window.close();
-*/
-
-
 void Camera::handleEvent(const sf::Event& event)
 {
 	if (const auto* mouseScroll = event.getIf<sf::Event::MouseWheelScrolled>()) {
-		if (ImGui::GetIO().WantCaptureMouse) return;
 		zoom(mouseScroll->delta);
 	} else if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
-		if (ImGui::GetIO().WantCaptureMouse) return;
 		if (mousePressed->button == sf::Mouse::Button::Right) {
 			prevWorldPos = window.mapPixelToCoords(mousePressed->position);
 			dragging = true;

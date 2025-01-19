@@ -45,7 +45,6 @@ void Application::processEvents()
 			else if (keyPressed->scancode == sf::Keyboard::Scancode::Insert)
 				menu.toggle();
 		} else if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
-			if (ImGui::GetIO().WantCaptureMouse) break;
 			if (mousePressed->button == sf::Mouse::Button::Left) {
 				// stuff
 			}
