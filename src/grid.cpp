@@ -21,6 +21,6 @@ const std::vector<std::vector<Cell>>& Grid::getCells() const {
 	return cells;
 }
 
-void toggleCell(int x, int y) {
-	cells[y][x] = !cells[y][x];
+void Grid::toggleCell(int x, int y) {
+	cells[y][x].solid = !cells[y][x].solid;
 }
