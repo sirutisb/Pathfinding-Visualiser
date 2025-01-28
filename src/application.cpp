@@ -11,7 +11,9 @@ Application::Application(const sf::Vector2u& size, const std::string& title)
 	, camera(window)
 	, menu()
 {
-	bool init = ImGui::SFML::Init(window);
+	if (!ImGui::SFML::Init(window)) {
+		// error should be handled here
+	}
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 }
