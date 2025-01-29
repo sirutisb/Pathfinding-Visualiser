@@ -20,17 +20,11 @@ void Grid::resize(const int width, const int height)
 	m_height = height;
 
 	// remove all cells out of bounds
-	std::vector<uint32_t> keys_to_remove;
-	for (const auto& key : m_cellSet) {
+	std::erase_if(m_cellSet, [this](const auto& key) {
 		const int x = key >> 16;
 		const int y = key & 0xFFFF;
-		if (x >= m_width || y >= m_height) {
-			keys_to_remove.push_back(key);
-		}
-	}
-	for (const auto& key : keys_to_remove) {
-		m_cellSet.erase(key);
-	}
+		return x >= m_width || y >= m_height;
+	});
 }
 
 void Grid::toggleCell(const int x, const int y) {
