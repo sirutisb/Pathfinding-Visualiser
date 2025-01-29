@@ -41,6 +41,6 @@ set(SOURCES
         src/menu.cpp
 )
 
-add_executable(main ${SOURCES})
-target_include_directories(main PRIVATE inc)
-target_link_libraries(main PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML)
+add_executable(${PROJECT_NAME} ${SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE inc)
+target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML)
