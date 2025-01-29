@@ -12,6 +12,7 @@ public:
 	void updateGridVertices(const sf::Vector2i& gridSize);
 	void updateCellVertices();
 
+	float getCellSize() const;
 
 private:
 	const Grid& grid;
