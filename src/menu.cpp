@@ -17,11 +17,12 @@ void Menu::render(sf::RenderWindow& window, Grid& grid)
 	if (!show) return;
 	ImGui::Begin("Options", &show);
 	ImGui::SeparatorText("Grid Options");
-	ImGui::SliderInt2("Grid Size", gridSize, 5, 50);
+	ImGui::SliderInt2("Grid Size", gridSize, 5, 200);
 	if (ImGui::Button("Create Grid")) {
 		grid.resize(gridSize[0], gridSize[1]);
 	}
 	if (ImGui::Button("Clear Grid")) {
+		grid.clear();
 	}
 	if (ImGui::Button("Save Grid")) {
 	}
