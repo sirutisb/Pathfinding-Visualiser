@@ -9,16 +9,19 @@ public:
 
 	void render(sf::RenderWindow& window);
 
-	sf::VertexArray createGridVertex(const sf::Vector2i& gridSize);
+	void updateGridVertices(const sf::Vector2i& gridSize);
 
 
 private:
 	const Grid& grid;
 	float cellSize;
 
-	sf::VertexArray gridVertexArray;
+	sf::VertexArray gridLines;
+	sf::VertexArray cellQuads;
+
 	sf::RectangleShape gridBg;
 
 	int vertexWidth, vertexHeight;
-	const static sf::Color gridBgColor;
+	const static sf::Color GRID_BG_COLOR;
+	const static sf::Color SOLID_CELL_COLOR;
 };

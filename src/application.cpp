@@ -49,6 +49,10 @@ void Application::processEvents()
 		} else if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
 			if (mousePressed->button == sf::Mouse::Button::Left) {
 				// stuff
+				sf::Vector2f worldPos = window.mapPixelToCoords(mousePressed->position);
+				sf::Vector2i gridPos = static_cast<sf::Vector2i>(worldPos / 75.0f);
+				if (gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= grid.getWidth() || gridPos.y >= grid.getHeight()) return;
+				grid.toggleCell(gridPos.x, gridPos.y);
 			}
 		}
 	}
