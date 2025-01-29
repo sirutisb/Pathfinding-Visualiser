@@ -30,5 +30,5 @@ private:
 	Camera camera;
 	Menu menu;
 
-	static const sf::Color bgColor;
+	static const sf::Color BG_COLOR;
 };
