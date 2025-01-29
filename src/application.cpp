@@ -1,15 +1,14 @@
 #include "application.h"
+#include <cmath>
 #include <imgui.h>
 #include <imgui-SFML.h>
 
-const sf::Color Application::bgColor = sf::Color(18, 33, 43);
+const sf::Color Application::BG_COLOR = sf::Color(18, 33, 43);
 
 Application::Application(const sf::Vector2u& size, const std::string& title)
 	: window(sf::VideoMode(size), title)
-	, grid()
 	, gridRenderer(grid, 75.f)
 	, camera(window)
-	, menu()
 {
 	if (!ImGui::SFML::Init(window)) {
 		// error should be handled here
@@ -48,11 +47,12 @@ void Application::processEvents()
 				menu.toggle();
 		} else if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
 			if (mousePressed->button == sf::Mouse::Button::Left) {
-				// stuff
-				sf::Vector2f worldPos = window.mapPixelToCoords(mousePressed->position);
-				sf::Vector2i gridPos = static_cast<sf::Vector2i>(worldPos / 75.0f);
-				if (gridPos.x < 0 || gridPos.y < 0 || gridPos.x >= grid.getWidth() || gridPos.y >= grid.getHeight()) return;
-				grid.toggleCell(gridPos.x, gridPos.y);
+				const sf::Vector2f worldPos = window.mapPixelToCoords(mousePressed->position);
+				const float cellSize = gridRenderer.getCellSize();
+				const int gridX = static_cast<int>(std::floor(worldPos.x / cellSize));
+				const int gridY = static_cast<int>(std::floor(worldPos.y / cellSize));
+				if (gridX < 0 || gridY < 0 || gridX >= grid.getWidth() || gridY >= grid.getHeight()) return;
+				grid.toggleCell(gridX, gridY);
 				gridRenderer.updateCellVertices();
 			}
 		}
@@ -68,7 +68,7 @@ void Application::update()
 
 void Application::render()
 {
-	window.clear(Application::bgColor);
+	window.clear(Application::BG_COLOR);
 	gridRenderer.render(window);
 	// animations rendered here? or maybe grid renderer idk yet
 	menu.render(window, grid);
