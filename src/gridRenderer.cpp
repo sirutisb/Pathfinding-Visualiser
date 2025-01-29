@@ -6,16 +6,17 @@ const sf::Color GridRenderer::SOLID_CELL_COLOR = sf::Color(40, 40, 40);
 GridRenderer::GridRenderer(const Grid& grid, float cellSize)
 	: grid(grid)
 	, cellSize(cellSize)
+	, gridLines(sf::PrimitiveType::Lines)
+	, obstacleVertices(sf::PrimitiveType::Triangles)
 	, vertexWidth(0)
 	, vertexHeight(0)
-	, gridLines(sf::PrimitiveType::Lines)
 {
 	gridBg.setFillColor(GRID_BG_COLOR);
 }
 
 void GridRenderer::render(sf::RenderWindow& window)
 {
-	if (grid.getCells().size() == 0) return;
+	if (grid.getCells().empty()) return;
 	int w = grid.getCells()[0].size();
 	int h = grid.getCells().size();
 	if (w != vertexWidth || h != vertexHeight) {
@@ -26,42 +27,10 @@ void GridRenderer::render(sf::RenderWindow& window)
 	}
 
 	window.draw(gridBg);
+	window.draw(obstacleVertices);
 	window.draw(gridLines);
 
 
-	sf::VertexArray obstacleVertices(sf::PrimitiveType::Triangles);
-	static float CELL_SIZE = 75.0f;
-	// Populate the VertexArray with obstacle cells
-	for (int row = 0; row < grid.getHeight(); ++row) {
-		for (int col = 0; col < grid.getWidth(); ++col) {
-			if (grid.getCells()[row][col].solid) {
-				// Define the four corners of the cell
-				sf::Vector2f topLeft(col * CELL_SIZE, row * CELL_SIZE);
-				sf::Vector2f topRight((col + 1) * CELL_SIZE, row * CELL_SIZE);
-				sf::Vector2f bottomRight((col + 1) * CELL_SIZE, (row + 1) * CELL_SIZE);
-				sf::Vector2f bottomLeft(col * CELL_SIZE, (row + 1) * CELL_SIZE);
-
-				// First triangle
-				sf::Vertex vert;
-				vert.color = sf::Color(50, 50, 50);
-				vert.position = topLeft;
-				obstacleVertices.append(vert);
-				vert.position = topRight;
-				obstacleVertices.append(vert);
-				vert.position = bottomRight;
-				obstacleVertices.append(vert);
-
-				// Second triangle
-				vert.position = topLeft;
-				obstacleVertices.append(vert);
-				vert.position = bottomRight;
-				obstacleVertices.append(vert);
-				vert.position = bottomLeft;
-				obstacleVertices.append(vert);
-			}
-		}
-	}
-	window.draw(obstacleVertices);
 
 }
 
@@ -83,5 +52,39 @@ void GridRenderer::updateGridVertices(const sf::Vector2i& gridSize)
 		gridLines.append({{x, 0}, sf::Color::White});
 		gridLines.append({{x, gridSize.y * cellSize}, sf::Color::White});
 	}
-	//updateCellVertices();
+	updateCellVertices();
+}
+
+void GridRenderer::updateCellVertices() {
+	obstacleVertices.clear();
+	// Populate the VertexArray with obstacle cells
+	for (int row = 0; row < grid.getHeight(); ++row) {
+		for (int col = 0; col < grid.getWidth(); ++col) {
+			if (grid.getCells()[row][col].solid) {
+				// Define the four corners of the cell
+				sf::Vector2f topLeft(col * cellSize, row * cellSize);
+				sf::Vector2f topRight((col + 1) * cellSize, row * cellSize);
+				sf::Vector2f bottomRight((col + 1) * cellSize, (row + 1) * cellSize);
+				sf::Vector2f bottomLeft(col * cellSize, (row + 1) * cellSize);
+
+				// First triangle
+				sf::Vertex vert;
+				vert.color = SOLID_CELL_COLOR;
+				vert.position = topLeft;
+				obstacleVertices.append(vert);
+				vert.position = topRight;
+				obstacleVertices.append(vert);
+				vert.position = bottomRight;
+				obstacleVertices.append(vert);
+
+				// Second triangle
+				vert.position = topLeft;
+				obstacleVertices.append(vert);
+				vert.position = bottomRight;
+				obstacleVertices.append(vert);
+				vert.position = bottomLeft;
+				obstacleVertices.append(vert);
+			}
+		}
+	}
 }

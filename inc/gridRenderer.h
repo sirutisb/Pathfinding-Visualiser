@@ -10,6 +10,7 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void updateGridVertices(const sf::Vector2i& gridSize);
+	void updateCellVertices();
 
 
 private:
@@ -17,7 +18,7 @@ private:
 	float cellSize;
 
 	sf::VertexArray gridLines;
-	sf::VertexArray cellQuads;
+	sf::VertexArray obstacleVertices;
 
 	sf::RectangleShape gridBg;
 
