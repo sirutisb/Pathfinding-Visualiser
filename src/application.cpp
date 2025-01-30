@@ -9,11 +9,13 @@ Application::Application(const sf::Vector2u& size, const std::string& title)
 	: window(sf::VideoMode(size), title)
 	, gridRenderer(grid, 75.f)
 	, camera(window)
+	, lastGridPos(-1, -1)
+	, leftMouseDown(false)
 {
 	if (!ImGui::SFML::Init(window)) {
 		// error should be handled here
 	}
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(144);
 	window.setKeyRepeatEnabled(false);
 }
 
@@ -29,6 +31,18 @@ void Application::run()
 		update();
 		render();
 	}
+}
+
+void Application::toggleCell(const sf::Vector2i& mousePos) {
+	const sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
+	const float cellSize = gridRenderer.getCellSize();
+	const int gridX = static_cast<int>(std::floor(worldPos.x / cellSize));
+	const int gridY = static_cast<int>(std::floor(worldPos.y / cellSize));
+	if (gridX < 0 || gridY < 0 || gridX >= grid.getWidth() || gridY >= grid.getHeight()) return;
+	if (lastGridPos.x == gridX && lastGridPos.y == gridY) return;
+	lastGridPos = {gridX, gridY};
+	grid.toggleCell(gridX, gridY);
+	gridRenderer.updateCellVertices();
 }
 
 void Application::processEvents()
@@ -47,14 +61,17 @@ void Application::processEvents()
 				menu.toggle();
 		} else if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
 			if (mousePressed->button == sf::Mouse::Button::Left) {
-				const sf::Vector2f worldPos = window.mapPixelToCoords(mousePressed->position);
-				const float cellSize = gridRenderer.getCellSize();
-				const int gridX = static_cast<int>(std::floor(worldPos.x / cellSize));
-				const int gridY = static_cast<int>(std::floor(worldPos.y / cellSize));
-				if (gridX < 0 || gridY < 0 || gridX >= grid.getWidth() || gridY >= grid.getHeight()) return;
-				grid.toggleCell(gridX, gridY);
-				gridRenderer.updateCellVertices();
+				leftMouseDown = true;
+				toggleCell(mousePressed->position);
 			}
+		} else if (const auto* mouseReleased = event->getIf<sf::Event::MouseButtonReleased>()) {
+			if (mouseReleased->button == sf::Mouse::Button::Left) {
+				leftMouseDown = false;
+				lastGridPos = {-1, -1};
+			}
+		} else if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>()) {
+			 if (!leftMouseDown) continue;
+			 toggleCell(mouseMoved->position);
 		}
 	}
 }

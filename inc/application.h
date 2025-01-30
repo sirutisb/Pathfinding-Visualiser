@@ -30,5 +30,11 @@ private:
 	Camera camera;
 	Menu menu;
 
+
+	void toggleCell(const sf::Vector2i& mousePos);
+
+	sf::Vector2i lastGridPos;
+	bool leftMouseDown;
+
 	static const sf::Color BG_COLOR;
 };

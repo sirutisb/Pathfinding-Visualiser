@@ -1,5 +1,4 @@
 #include "grid.h"
-#include <vector>
 
 Grid::Grid() : Grid(0, 0) {}
 
