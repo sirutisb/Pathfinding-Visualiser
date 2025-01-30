@@ -28,9 +28,23 @@ void Grid::resize(const int width, const int height) {
 void Grid::toggleCell(const int x, const int y) {
 	const uint32_t key = x << 16 | y;
 	if (const auto it = m_cellSet.find(key); it != m_cellSet.end()) {
-		//m_cellSet.erase(it);
+		m_cellSet.erase(it);
 	} else {
 		m_cellSet.insert(key);
+	}
+}
+
+bool Grid::getState(const int x, const int y) const {
+	const uint32_t key = x << 16 | y;
+	return m_cellSet.contains(key);
+}
+
+void Grid::setState(const int x, const int y, const bool state) {
+	const uint32_t key = x << 16 | y;
+	if (state) {
+		m_cellSet.insert(key);
+	} else {
+		m_cellSet.erase(key);
 	}
 }
 

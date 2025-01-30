@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-
 #include "cell.h"
 #include <unordered_set>
 
@@ -13,6 +12,8 @@ public:
 	void resize(int width, int height);
 	void clear();
 	void toggleCell(int x, int y);
+	bool getState(int x, int y) const;
+	void setState(int x, int y, bool state);
 
 	int getWidth() const;
 	int getHeight() const;
