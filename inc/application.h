@@ -30,11 +30,13 @@ private:
 	Camera camera;
 	Menu menu;
 
+	sf::Vector2i mouseToCellPosition(const sf::Vector2i& mousePos) const;
+	void setCellState(const sf::Vector2i& pos, bool state);
+	void drawLine(const sf::Vector2i& start, const sf::Vector2i& end, bool fillState);
 
-	void toggleCell(const sf::Vector2i& mousePos);
-
-	sf::Vector2i lastGridPos;
+	sf::Vector2i prevGridPos;
 	bool leftMouseDown;
+	bool fillState;
 
 	static const sf::Color BG_COLOR;
 };
