@@ -2,6 +2,7 @@
 #include <cmath>
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include "config.h"
 
 const sf::Color Application::BG_COLOR = sf::Color(18, 33, 43);
 
@@ -15,7 +16,7 @@ Application::Application(const sf::Vector2u& size, const std::string& title)
 	if (!ImGui::SFML::Init(window)) {
 		// error should be handled here
 	}
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(config::FRAME_RATE);
 	window.setKeyRepeatEnabled(false);
 }
 
