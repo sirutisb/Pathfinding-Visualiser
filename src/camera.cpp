@@ -9,8 +9,7 @@ Camera::Camera(sf::RenderWindow& window)
 {
 }
 
-void Camera::handleEvent(const sf::Event& event)
-{
+void Camera::handleEvent(const sf::Event& event) {
 	if (const auto* mouseScroll = event.getIf<sf::Event::MouseWheelScrolled>()) {
 		zoom(mouseScroll->delta);
 	} else if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>()) {
@@ -29,8 +28,7 @@ void Camera::handleEvent(const sf::Event& event)
 	}
 }
 
-void Camera::update()
-{
+void Camera::update() {
 	if (!dragging) return;
 	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 	sf::Vector2f currWorldPos = window.mapPixelToCoords(mousePos);
@@ -40,8 +38,7 @@ void Camera::update()
 	window.setView(view);
 }
 
-void Camera::zoom(float deltaScroll)
-{
+void Camera::zoom(float deltaScroll) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::Vector2f prevMouseWorld = window.mapPixelToCoords(mousePosition, view);
 

@@ -16,8 +16,7 @@ GridRenderer::GridRenderer(const Grid& grid, float cellSize)
 
 float GridRenderer::getCellSize() const { return cellSize; }
 
-void GridRenderer::render(sf::RenderWindow& window)
-{
+void GridRenderer::render(sf::RenderWindow& window) {
 	int w = grid.getWidth();
 	int h = grid.getHeight();
 	if (w != vertexWidth || h != vertexHeight) {
@@ -32,8 +31,7 @@ void GridRenderer::render(sf::RenderWindow& window)
 	window.draw(gridLines);
 }
 
-void GridRenderer::updateGridVertices(const sf::Vector2i& gridSize)
-{
+void GridRenderer::updateGridVertices(const sf::Vector2i& gridSize) {
 	gridLines.clear();
 
 	// Create horizontal lines

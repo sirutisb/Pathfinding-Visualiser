@@ -12,8 +12,7 @@ Menu::Menu()
 {
 }
 
-void Menu::render(sf::RenderWindow& window, Grid& grid)
-{
+void Menu::render(sf::RenderWindow& window, Grid& grid) {
 	if (!show) return;
 	ImGui::Begin("Options", &show);
 	ImGui::SeparatorText("Grid Options");
@@ -41,12 +40,10 @@ void Menu::render(sf::RenderWindow& window, Grid& grid)
 	ImGui::SFML::Render(window);
 }
 
-void Menu::toggle()
-{
+void Menu::toggle() {
 	show = !show;
 }
 
-bool Menu::isOpen() const
-{
+bool Menu::isOpen() const {
 	return show;
 }

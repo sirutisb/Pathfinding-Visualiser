@@ -13,8 +13,7 @@ int Grid::getHeight() const { return m_height; }
 
 void Grid::clear() { m_cellSet.clear(); }
 
-void Grid::resize(const int width, const int height)
-{
+void Grid::resize(const int width, const int height) {
 	m_width = width;
 	m_height = height;
 
@@ -29,7 +28,7 @@ void Grid::resize(const int width, const int height)
 void Grid::toggleCell(const int x, const int y) {
 	const uint32_t key = x << 16 | y;
 	if (const auto it = m_cellSet.find(key); it != m_cellSet.end()) {
-		m_cellSet.erase(it);
+		//m_cellSet.erase(it);
 	} else {
 		m_cellSet.insert(key);
 	}

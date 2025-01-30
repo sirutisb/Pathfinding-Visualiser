@@ -15,17 +15,15 @@ Application::Application(const sf::Vector2u& size, const std::string& title)
 	if (!ImGui::SFML::Init(window)) {
 		// error should be handled here
 	}
-	window.setFramerateLimit(144);
+	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 }
 
-Application::~Application()
-{
+Application::~Application() {
 	ImGui::SFML::Shutdown();
 }
 
-void Application::run()
-{
+void Application::run() {
 	while (window.isOpen()) {
 		processEvents();
 		update();
@@ -33,6 +31,7 @@ void Application::run()
 	}
 }
 
+// should this be the application's responsibility???
 void Application::toggleCell(const sf::Vector2i& mousePos) {
 	const sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
 	const float cellSize = gridRenderer.getCellSize();
@@ -45,8 +44,7 @@ void Application::toggleCell(const sf::Vector2i& mousePos) {
 	gridRenderer.updateCellVertices();
 }
 
-void Application::processEvents()
-{
+void Application::processEvents() {
 	while (const std::optional<sf::Event> event = window.pollEvent()) {
 		if (menu.isOpen())
 			ImGui::SFML::ProcessEvent(window, *event);
@@ -76,15 +74,13 @@ void Application::processEvents()
 	}
 }
 
-void Application::update()
-{
+void Application::update() {
 	if (menu.isOpen())
 		ImGui::SFML::Update(window, clock.restart());
 	camera.update();
 }
 
-void Application::render()
-{
+void Application::render() {
 	window.clear(Application::BG_COLOR);
 	gridRenderer.render(window);
 	// animations rendered here? or maybe grid renderer idk yet
