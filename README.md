@@ -34,7 +34,7 @@ A comprehensive and interactive pathfinding algorithm visualiser built using C++
 
 ### Prerequisites
 - **C++ Compiler**: Supports C++20 (e.g., GCC, Clang, MSVC).
-- **CMake 3.27+**: Build system.
+- **CMake 3.28+**: Build system.
 
 ### Build Instructions
 
