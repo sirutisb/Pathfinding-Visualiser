@@ -8,7 +8,7 @@ public:
 	void handleEvent(const sf::Event& event);
 	void update();
 private:
-	void zoom(float deltaZoom);
+	void zoom(float deltaScroll);
 
 	sf::RenderWindow& window;
 	sf::View view;
