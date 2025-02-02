@@ -10,7 +10,7 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void updateGridVertices(const sf::Vector2i& gridSize);
-	void updateCellVertices();
+	void updateCellVertices(const sf::Vector2i& startPos, const sf::Vector2i& endPos);
 
 	float getCellSize() const;
 

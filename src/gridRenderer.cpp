@@ -48,10 +48,10 @@ void GridRenderer::updateGridVertices(const sf::Vector2i& gridSize) {
 		gridLines.append({{x, 0}, sf::Color::White});
 		gridLines.append({{x, gridSize.y * cellSize}, sf::Color::White});
 	}
-	updateCellVertices();
+	//updateCellVertices();
 }
 
-void GridRenderer::updateCellVertices() {
+void GridRenderer::updateCellVertices(const sf::Vector2i& startPos, const sf::Vector2i& endPos) {
 	obstacleVertices.clear();
 	const auto& cells = grid.getCells();
 	for (const auto& key : cells) {
@@ -81,4 +81,32 @@ void GridRenderer::updateCellVertices() {
 		vert.position = bottomLeft;
 		obstacleVertices.append(vert);
 	}
+
+	auto addCell = [&](const sf::Vector2i& pos, sf::Color color) -> void {
+		sf::Vector2f topLeft(pos.x * cellSize, pos.y * cellSize);
+		sf::Vector2f topRight((pos.x + 1) * cellSize, pos.y * cellSize);
+		sf::Vector2f bottomRight((pos.x + 1) * cellSize, (pos.y + 1) * cellSize);
+		sf::Vector2f bottomLeft(pos.x * cellSize, (pos.y + 1) * cellSize);
+
+		// First triangle
+		sf::Vertex vert;
+		vert.color = color;
+		vert.position = topLeft;
+		obstacleVertices.append(vert);
+		vert.position = topRight;
+		obstacleVertices.append(vert);
+		vert.position = bottomRight;
+		obstacleVertices.append(vert);
+
+		// Second triangle
+		vert.position = topLeft;
+		obstacleVertices.append(vert);
+		vert.position = bottomRight;
+		obstacleVertices.append(vert);
+		vert.position = bottomLeft;
+		obstacleVertices.append(vert);
+	};
+
+	addCell(startPos, sf::Color::Green);
+	addCell(endPos, sf::Color::Red);
 }

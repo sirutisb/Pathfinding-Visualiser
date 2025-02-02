@@ -2,6 +2,7 @@
 #include <cstdint>
 #include "cell.h"
 #include <unordered_set>
+#include <string>
 
 class Grid
 {
@@ -17,6 +18,9 @@ public:
 
 	int getWidth() const;
 	int getHeight() const;
+
+	bool saveToFile(const std::string& fileName);
+	bool loadFromFile(const std::string& fileName);
 
 	const std::unordered_set<uint32_t>& getCells() const;
 

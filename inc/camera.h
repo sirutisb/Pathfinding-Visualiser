@@ -7,6 +7,9 @@ public:
 	Camera(sf::RenderWindow& window);
 	void handleEvent(const sf::Event& event);
 	void update();
+
+	sf::Vector2f getPosition() const;
+	sf::View& getView();
 private:
 	void zoom(float deltaScroll);
 

@@ -53,3 +53,9 @@ void Camera::zoom(const float deltaScroll) {
 	view.move(deltaPos);
 	window.setView(view);
 }
+
+sf::Vector2f Camera::getPosition() const {
+	return view.getCenter();
+}
+
+sf::View& Camera::getView() { return view; }

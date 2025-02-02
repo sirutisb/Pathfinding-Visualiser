@@ -10,6 +10,7 @@ Menu::Menu()
 	, showAnimation(false)
 	, animationDelay(1.0f)
 {
+	fileName[0] = '\0';
 }
 
 void Menu::render(sf::RenderWindow& window, Grid& grid) {
@@ -23,9 +24,12 @@ void Menu::render(sf::RenderWindow& window, Grid& grid) {
 	if (ImGui::Button("Clear Grid")) {
 		grid.clear();
 	}
+	ImGui::InputText("File name", fileName, 16);
 	if (ImGui::Button("Save Grid")) {
+		grid.saveToFile(fileName);
 	}
 	if (ImGui::Button("Load Grid")) {
+		grid.loadFromFile(fileName);
 	}
 	ImGui::SeparatorText("Algorithm");
 	ImGui::Combo("Algorithm", &algorithmIndex, algorithms, IM_ARRAYSIZE(algorithms));

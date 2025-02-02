@@ -14,6 +14,8 @@ private:
 
 	int gridSize[2];
 
+	char fileName[16];
+
 	int algorithmIndex;
 	const char* algorithms[2];
 
