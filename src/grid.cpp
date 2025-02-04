@@ -52,7 +52,7 @@ void Grid::setState(const int x, const int y, const bool state) {
 }
 
 bool Grid::saveToFile(const std::string& fileName) {
-	std::ofstream file(fileName, std::ios::binary);
+	std::ofstream file("maps/" + fileName, std::ios::binary);
 	if (!file) return false;
 
 	file.write(reinterpret_cast<const char*>(&m_width), sizeof(m_width));
@@ -73,7 +73,7 @@ bool Grid::saveToFile(const std::string& fileName) {
 }
 
 bool Grid::loadFromFile(const std::string& fileName) {
-	std::ifstream file(fileName, std::ios::binary);
+	std::ifstream file("maps/" + fileName, std::ios::binary);
 	if (!file) return false;
 
 	int32_t width, height;
