@@ -37,3 +37,7 @@
 *.ini
 build/
 cmake-build-*
+
+#
+maps
+*.map
