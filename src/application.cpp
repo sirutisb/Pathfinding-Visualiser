@@ -27,7 +27,7 @@ Application::Application(const sf::Vector2u& size, const std::string& title)
 	, camera(window)
 	, prevGridPos(-1, -1) // maybe no longer needed to store invalid position anymore
 	, leftMouseDown(false)
-	, debugFont("Fonts/Besty Beige.ttf")
+	, debugFont("res/fonts/Besty Beige.ttf")
 	, debugText(debugFont)
 	, startPos(0, 0)
 	, endPos(-1, -1)
