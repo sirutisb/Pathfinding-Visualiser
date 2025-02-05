@@ -38,6 +38,7 @@ set(SOURCES
         src/application.cpp
         src/camera.cpp
         src/grid.cpp
+        src/gridFile.cpp
         src/gridRenderer.cpp
         src/menu.cpp
 )
